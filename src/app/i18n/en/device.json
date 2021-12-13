@@ -1,0 +1,7 @@
+{
+    "device": {
+        "systemName": "System Name",
+        "type": "Type",
+        "hddCapacity": "HDD Capacity (GB)"
+    }
+}
