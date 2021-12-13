@@ -1,13 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
+import images from './shared/images/images';
 import { Counter } from './features/counter/Counter';
 import './App.css';
+import I18n from './app/i18n';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+
+        <h1>{I18n.t('global.title')}</h1>
+        <img src={images.logo} className="App-logo" alt="logo" />
         <Counter />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
