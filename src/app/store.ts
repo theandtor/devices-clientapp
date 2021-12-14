@@ -1,10 +1,14 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import reducer from '../shared/reducer';
 
 export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
+  reducer,
+  middleware: getDefaultMiddleware =>
+  getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActionPaths: ['payload.config', 'payload.request', 'error', 'meta.arg'],
+    },
+  }),
 });
 
 export type AppDispatch = typeof store.dispatch;

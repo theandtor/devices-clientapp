@@ -1,0 +1,17 @@
+{
+    "global": {
+        "title": "Devices ClientApp",
+        "buttons": {
+            "title": "Actions",
+            "edit": "Edit",
+            "create": "Create",
+            "delete": "Delete",
+            "save": "Save"
+        },
+        "form": {
+            "validation": {
+                "maxlength": "You must enter maximum %{max} characters "
+            }
+        }
+    }
+}

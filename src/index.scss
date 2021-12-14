@@ -1,0 +1,41 @@
+/* The following line can be included in a src/App.scss */
+@import './../bootstrap-variables';
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+.primary {
+  color: $color-primary;
+}
+
+.secondary {
+  color: $color-secondary;
+}
+
+.info {
+  color: $color-info;
+}
+
+.danger {
+  color: $color-danger;
+}
+
+.btn-danger {
+  color: $color-white;
+}
+
+.btn-info {
+  color: $color-white;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
