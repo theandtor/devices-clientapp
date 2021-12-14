@@ -4,6 +4,9 @@ import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejected } fro
 import { serializeAxiosError } from './reducer.utils';
 import { IDevice, defaultValue } from '../model/device.model';
 import { SERVER_DOMAIN } from '../constants/environment.constants';
+import { IDeviceFilter } from '../model/device-filter.model';
+import _, { lowerCase } from 'lodash';
+import { sortBy } from '../util/sort-util';
 
 const initialState = {
   loading: false,
@@ -19,9 +22,26 @@ const apiUrl = `${SERVER_DOMAIN}/devices`;
 
 // Async Actions
 
-export const getDevices = createAsyncThunk('devices/get', async () => {
+/*
+* This funtion should be better implemented in backend app
+*/
+const filterDeviceList = (devices: IDevice[], filter?: IDeviceFilter): IDevice[] => {
+  if (!_.isNil(filter)) {
+    if (!_.isEmpty(filter.query)) {
+      devices = _.filter(devices, (d: IDevice) => lowerCase(d.type).includes(lowerCase(filter.query)));
+    }
+    devices = devices.sort((d1, d2) => sortBy(d1, d2, filter))
+  }
+  return devices;
+}
+
+export const getDevices = createAsyncThunk('devices/get', async (filter?: IDeviceFilter) => {
   const requestUrl = `${apiUrl}`;
-  return axios.get<IDevice[]>(requestUrl);
+  const result = await axios.get<IDevice[]>(requestUrl);
+
+  result.data = filterDeviceList(result.data, filter);
+
+  return result;
 });
 
 export const getDevice = createAsyncThunk(

@@ -15,6 +15,9 @@
         },
         "edit": {
             "title": "Edit Device"
+        },
+        "filter": {
+            "type": "Filter by Type"
         }
     }
 }

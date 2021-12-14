@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { deleteDevice, getDevices, createDevice, updateDevice } from "../../../shared/reducer/device.reducer";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { IDevice } from '../../../shared/model/device.model';
+import { IDeviceFilter } from "../../../shared/model/device-filter.model";
 
 export const useDeviceList = () => {
     const dispatch = useAppDispatch();
@@ -11,8 +12,9 @@ export const useDeviceList = () => {
 
     const [deviceSelected, setDeviceSelected] = useState<IDevice | null>(null);
 
-    const [filter, setFilter] = useState({
+    const [filter, setFilter] = useState<IDeviceFilter>({
         sort: 'id',
+        ascending: true,
         query: ''
     });
 
@@ -24,7 +26,7 @@ export const useDeviceList = () => {
 
     useEffect(() => {
         dispatch(
-            getDevices()
+            getDevices(filter)
         );
     }, [dispatch, filter]);
 
@@ -61,11 +63,21 @@ export const useDeviceList = () => {
         handleCloseDeleteModal();
     }
 
-    const sort = useCallback((sort: string) => () =>
-        setFilter((prevFilter: any) => {
+    const onChangeQuery = useCallback((event: any) =>
+        setFilter((prevFilter: IDeviceFilter) => {
             return {
                 ...prevFilter,
-                sort
+                query: event.target.value,
+            }
+        }), []);
+
+    const sort = useCallback((sort: string) =>
+        setFilter((prevFilter: IDeviceFilter) => {
+            const ascending = prevFilter.sort === sort ? !prevFilter.ascending : true;
+            return {
+                ...prevFilter,
+                sort,
+                ascending,
             }
         }), []);
 
@@ -78,6 +90,7 @@ export const useDeviceList = () => {
         handleDetailModal,
         handleCloseDetailModal,
         handleCloseDeleteModal,
+        onChangeQuery,
         devices,
         showDetailModal,
         showDeleteModal,

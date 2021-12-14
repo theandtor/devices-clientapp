@@ -10,6 +10,8 @@ import DeleteDeviceModal from './delete-device-modal/delete-device-modal';
 import './devices-list.scss';
 import { useDeviceList } from '../custom-hook/use-device-list';
 import I18n from '../../i18n';
+import { DEVICE_TYPE } from '../../../shared/constants/device-type.constants';
+import { ValidatedField } from 'react-jhipster';
 
 function DevicesList() {
     const {
@@ -21,6 +23,7 @@ function DevicesList() {
         handleDetailModal,
         handleCloseDetailModal,
         handleCloseDeleteModal,
+        onChangeQuery,
         devices,
         showDetailModal,
         showDeleteModal,
@@ -56,14 +59,34 @@ function DevicesList() {
         )
     }
 
+    const renderDropdownType = () => {
+        return (
+            <ValidatedField className='primary' type="select" name='type' onChange={onChangeQuery} defaultChecked={undefined} label={I18n.t('device.filter.type')}>
+                <option value={undefined}></option>
+                {Object.values(DEVICE_TYPE).map(type => (
+                    <option value={type} key={type}>
+                        {I18n.t(`deviceType.${type}`)}
+                    </option>
+                ))}
+            </ValidatedField>
+        )
+    }
+
     return (
         <div>
-            <CustomButton
-                text={i18n.t('device.button.create')}
-                iconName='pencil-alt'
-                variantButton='info'
-                handleClick={handleDetailModal.bind(null, null)}
-            />
+            <div className='d-flex justify-content-between'>
+                <div>
+                    {renderDropdownType()}
+                </div>
+                <div className='align-self-center'>
+                    <CustomButton
+                        text={i18n.t('device.button.create')}
+                        iconName='pencil-alt'
+                        variantButton='info'
+                        handleClick={handleDetailModal.bind(null, null)}
+                    />
+                </div>
+            </div>
 
             {renderDetailModal()}
             {renderDeleteModal()}
@@ -71,10 +94,10 @@ function DevicesList() {
             <Table responsive striped>
                 <thead>
                     <tr>
-                        <TableHeaderSort text={i18n.t('device.systemName')} onPressSort={sort} />
-                        <TableHeaderSort text={i18n.t('device.type')} onPressSort={sort} />
-                        <TableHeaderSort text={i18n.t('device.hddCapacity')} onPressSort={sort} />
-                        <TableHeaderSort text={i18n.t('global.buttons.title')} onPressSort={sort} />
+                        <TableHeaderSort text={i18n.t('device.systemName')} onPressSort={sort} sortBy='system_name' />
+                        <TableHeaderSort text={i18n.t('device.type')} onPressSort={sort} sortBy='type' />
+                        <TableHeaderSort text={i18n.t('device.hddCapacity')} onPressSort={sort} sortBy='hdd_capacity' />
+                        <TableHeaderSort text={i18n.t('global.buttons.title')} />
                     </tr>
                 </thead>
                 <tbody>
