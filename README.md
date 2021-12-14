@@ -2,7 +2,7 @@ This project was developed by [Andrés Ordóñez](https://github.com/theandtor)
 
 ## Requirements
 
-node: v16.13.1
+node: v16.13.1 <br />
 react: v17.0.2
 
 ## Available Scripts
