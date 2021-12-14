@@ -28,6 +28,7 @@ function DevicesList() {
         showDetailModal,
         showDeleteModal,
         deviceSelected,
+        filter,
     } = useDeviceList()
 
     const renderDetailModal = () => {
@@ -61,7 +62,7 @@ function DevicesList() {
 
     const renderDropdownType = () => {
         return (
-            <ValidatedField className='primary' type="select" name='type' onChange={onChangeQuery} defaultChecked={undefined} label={I18n.t('device.filter.type')}>
+            <ValidatedField className='primary' type="select" name='type' onChange={onChangeQuery} value={filter.query} defaultChecked={undefined} label={I18n.t('device.filter.type')}>
                 <option value={undefined}></option>
                 {Object.values(DEVICE_TYPE).map(type => (
                     <option value={type} key={type}>

@@ -57,7 +57,6 @@ export const createDevice = createAsyncThunk(
   'device/post',
   async (device: IDevice, thunkAPI) => {
     const result = await axios.post<IDevice>(`${apiUrl}`, device);
-    thunkAPI.dispatch(getDevices());
     return result;
   },
   { serializeError: serializeAxiosError }
@@ -67,7 +66,6 @@ export const updateDevice = createAsyncThunk(
   'device/put',
   async (device: IDevice, thunkAPI) => {
     const result = await axios.put<IDevice>(`${apiUrl}/${device.id}`, device);
-    thunkAPI.dispatch(getDevices());
     return result;
   },
   { serializeError: serializeAxiosError }
@@ -78,7 +76,6 @@ export const deleteDevice = createAsyncThunk(
   async (id: string, thunkAPI) => {
     const requestUrl = `${apiUrl}/${id}`;
     const result = await axios.delete<IDevice>(requestUrl);
-    thunkAPI.dispatch(getDevices());
     return result;
   },
   { serializeError: serializeAxiosError }

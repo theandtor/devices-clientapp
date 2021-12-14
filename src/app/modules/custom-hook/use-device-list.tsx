@@ -3,6 +3,13 @@ import { deleteDevice, getDevices, createDevice, updateDevice } from "../../../s
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { IDevice } from '../../../shared/model/device.model';
 import { IDeviceFilter } from "../../../shared/model/device-filter.model";
+import _ from "lodash";
+
+const filterDefault = {
+    sort: 'id',
+    ascending: true,
+    query: ''
+};
 
 export const useDeviceList = () => {
     const dispatch = useAppDispatch();
@@ -12,11 +19,7 @@ export const useDeviceList = () => {
 
     const [deviceSelected, setDeviceSelected] = useState<IDevice | null>(null);
 
-    const [filter, setFilter] = useState<IDeviceFilter>({
-        sort: 'id',
-        ascending: true,
-        query: ''
-    });
+    const [filter, setFilter] = useState<IDeviceFilter>(_.cloneDeep(filterDefault));
 
     const handleCloseDetailModal = () => setShowDetailModal(false);
     const handleShowDetailModal = () => setShowDetailModal(true);
@@ -30,24 +33,30 @@ export const useDeviceList = () => {
         );
     }, [dispatch, filter]);
 
+    const serDefaultFilter = () => {
+        setFilter(_.cloneDeep(filterDefault));
+    }
+
     const handleDetailModal = useCallback((device: IDevice | null) => {
         setDeviceSelected(device);
         handleShowDetailModal();
     }, [])
 
-    const handleCreate = (device: IDevice) => {
+    const handleCreate = async (device: IDevice) => {
         setDeviceSelected(null);
-        dispatch(
+        await dispatch(
             createDevice(device)
         );
+        serDefaultFilter();
         handleCloseDetailModal();
     }
 
-    const handleEdit = (device: IDevice) => {
+    const handleEdit = async (device: IDevice) => {
         setDeviceSelected(null);
-        dispatch(
+        await dispatch(
             updateDevice(device)
         );
+        serDefaultFilter();
         handleCloseDetailModal();
     }
 
@@ -56,10 +65,11 @@ export const useDeviceList = () => {
         handleShowDeleteModal();
     }, [])
 
-    const handleDelete = () => {
-        dispatch(
+    const handleDelete = async () => {
+        await dispatch(
             deleteDevice(deviceSelected?.id)
         );
+        serDefaultFilter();
         handleCloseDeleteModal();
     }
 
@@ -95,5 +105,6 @@ export const useDeviceList = () => {
         showDetailModal,
         showDeleteModal,
         deviceSelected,
+        filter,
     }
 }
