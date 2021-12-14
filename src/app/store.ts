@@ -3,6 +3,12 @@ import reducer from '../shared/reducer';
 
 export const store = configureStore({
   reducer,
+  middleware: getDefaultMiddleware =>
+  getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActionPaths: ['payload.config', 'payload.request', 'error', 'meta.arg'],
+    },
+  }),
 });
 
 export type AppDispatch = typeof store.dispatch;

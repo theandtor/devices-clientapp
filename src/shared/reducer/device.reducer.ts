@@ -88,7 +88,6 @@ export const DeviceManagementSlice = createSlice({
       .addMatcher(isFulfilled(getDevices), (state, action) => {
         state.loading = false;
         state.devices = action.payload.data;
-        state.totalItems = parseInt(action.payload.headers['x-total-count'], 10);
       })
       .addMatcher(isFulfilled(createDevice, updateDevice), (state, action) => {
         state.updating = false;

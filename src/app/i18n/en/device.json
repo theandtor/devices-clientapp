@@ -2,6 +2,19 @@
     "device": {
         "systemName": "System Name",
         "type": "Type",
-        "hddCapacity": "HDD Capacity (GB)"
+        "hddCapacity": "HDD Capacity (GB)",
+        "button": {
+            "create": "Create new device"
+        },
+        "delete": {
+            "title": "Delete Device",
+            "description": "Are you sure you want to delete %{deviceName} device?"
+        },
+        "create": {
+            "title": "Create Device"
+        },
+        "edit": {
+            "title": "Edit Device"
+        }
     }
 }
